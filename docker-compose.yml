@@ -1,0 +1,25 @@
+version: "3"
+services:
+  app:
+    build: ./app
+    links:
+      - db
+    command: jupyter notebook --ip 0.0.0.0 --no-browser --allow-root
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./app:/app
+
+  db:
+    restart: always
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      LANG: ru_RU.utf8
+      LANGUAGE: ru_RU.utf8
+      LC_ALL: ru_RU.utf8
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf
