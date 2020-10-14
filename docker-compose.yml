@@ -22,4 +22,6 @@ services:
       LC_ALL: ru_RU.utf8
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./db/my.cnf:/etc/mysql/conf.d/custom.cnf
+    
+    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_general_ci']
